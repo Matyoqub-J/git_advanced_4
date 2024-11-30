@@ -53,12 +53,16 @@ def train_file_list_to_json(english_file_list: List[str], german_file_list: List
         processed_file_list.append(template_end + english_file + template_mid + german_file + template_start)
     return processed_file_list
 
+import json
 
 def write_file_list(file_list: List[str], path: str) -> None:
-    """Writes a list of strings to a file, each string on a new line"""
-    with open(path, 'w') as f:
-        for file in file_list:
-            f.write(file + '\n')
+    """Writes a list of strings to a file as a JSON array."""
+    try:
+        with open(path, 'w') as f:
+            json.dump(file_list, f, indent=4)
+    except IOError as e:
+        print(f"Error writing to file {path}: {e}")
+
             
 if __name__ == "__main__":
     path = './'
