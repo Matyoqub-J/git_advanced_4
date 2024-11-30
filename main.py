@@ -1,9 +1,18 @@
 from typing import List
 
 def path_to_file_list(path: str) -> List[str]:
-    """Reads a file and returns a list of lines in the file"""
-    lines = open(path, 'r').read().split('\n')
-    return lines
+    """Reads a file and returns a list of lines in the file."""
+    try:
+        with open(path, 'r') as file:
+            lines = file.read().splitlines()
+        return lines
+    except FileNotFoundError:
+        print(f"Error: File not found at path: {path}")
+        return []
+    except IOError as e:
+        print(f"Error reading file {path}: {e}")
+        return []
+
 
 def train_file_list_to_json(english_file_list: List[str], german_file_list: List[str]) -> List[str]:
     """Converts two lists of file paths into a list of json strings"""
